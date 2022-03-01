@@ -2,10 +2,15 @@ package inheritance;
 
 public abstract class WrittenItem extends Item{
 	private String author;
-	public void checkIn()
+	public WrittenItem()
 	{
+		
 	}
-	
+	public WrittenItem(int uin,String title,int NoOfCopies,String author)
+	{
+		super(uin,title,NoOfCopies);
+		this.author=author;
+	}
 
 	public String getAuthor() {
 		return author;

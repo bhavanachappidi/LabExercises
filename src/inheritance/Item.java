@@ -1,9 +1,13 @@
 package inheritance;
 
+import java.util.ArrayList;
+
 public abstract class Item {
 	private int uin;
 	private String title;
 	private int NoOfCopies;
+	static ArrayList<Item> ai = new ArrayList<>();
+	
 	
 	public Item()
 	{
@@ -14,14 +18,28 @@ public abstract class Item {
 		this.uin=uin;
 		this.title=title;
 		this.NoOfCopies=NoOfCopies;
+		
+		
 	}
-	public void checkIn()
+	public void checkIn(int uin,String title)
 	{
-		NoOfCopies=NoOfCopies+1;
+		NoOfCopies=NoOfCopies+this.NoOfCopies;
+		
 	}
-	public void checkOut()
+	public void checkOut(int uin)
 	{
 		NoOfCopies=NoOfCopies-1;
+		for(Item a : ai)
+		{
+			if(a.uin!=uin)
+			{
+				System.out.println("No Such item present for checkout");
+			}
+			else
+			{
+				a.setNoOfCopies(NoOfCopies);
+			}
+		}
 	}
 	public void print()
 	{
@@ -29,6 +47,7 @@ public abstract class Item {
 		System.out.println("ID: " +uin);
 		System.out.println("Number of copies: " +NoOfCopies);
 	}
+	
 	public boolean equals(Object obj)
 	{
 		Item b = (Item)obj;
@@ -48,13 +67,25 @@ public abstract class Item {
 	}
 	public void addItem(int UIN,String title,int NoOfCopies)
 	{
-		setUIN(UIN);
-		setTitle(title);
-		setNoOfCopies(NoOfCopies);	
+		for(Item a : ai)
+		{
+			if(a.uin!=UIN)
+			{
+				setUIN(UIN);
+				setTitle(title);
+				setNoOfCopies(NoOfCopies);
+			}
+			else
+			{
+				checkIn(NoOfCopies,title);
+				a.setNoOfCopies(NoOfCopies);
+			}
+		}
+		
 	}
 	public String toString()
 	{
-		return "ID : "+uin+"Title : "+title+"Number of copies : "+NoOfCopies;
+		return "ID : "+uin+"      Title : "+title+"      Number of copies : "+NoOfCopies;
 	}
 	public int getUIN() {
 		return uin;
